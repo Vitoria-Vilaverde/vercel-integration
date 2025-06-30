@@ -28,5 +28,15 @@ export default async function handler(req, res) {
     scoreML: mlResults.conversao_probas[i]
   }));
 
+
+  // 3. **AQUI você insere a chamada ao Apps Script para salvar no Sheets:**
+  await fetch("https://script.google.com/macros/s/AKfycbyz_PQgEnO4uvnY04tMUTaEC_2TRP-Ye_EjIv5fXRNCct6zMs9Y3PDSnyeK4Of37Ylb/exec", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(respostas)
+  });
+  // (você pode ignorar a resposta, pois é só para salvar)
+
+  // 4. Responde normalmente ao frontend
   res.status(200).json(respostas);
 }
